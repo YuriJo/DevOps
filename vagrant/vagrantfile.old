@@ -1,0 +1,60 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+  config.vm.hostname = "vagrant.db1"  
+  config.vm.network "private_network", ip: "100.168.1.100"
+  config.vm.network  "forwarded_port", guest: 22, host: 2222, auto_correct: true
+
+  config.vm.define "database_1"
+  config.ssh.port = 22
+  config.vm.provider "virtualbox" do |v|
+     v.gui = false
+     v.memory = 2048
+     v.cpus = 1
+     v.check_guest_additions = true
+     v.name = "database_1"
+
+  end
+end
+
+Vagrant.configure(2) do |config|
+    config.vm.box = "centos/7"
+    config.vm.box_check_update = false
+    config.vm.hostname = "vagrant.db2"  
+    config.vm.network "private_network", ip: "100.168.1.101"
+    config.vm.network  "forwarded_port", guest: 22, host: 2223, auto_correct: true
+
+    config.vm.define "database_2"
+    config.ssh.port = 22
+    config.vm.provider "virtualbox" do |v|
+       v.gui = false
+       v.memory = 2048
+       v.cpus = 1
+       v.check_guest_additions = true
+       v.name = "database_2"
+  
+    end
+  end
+
+  Vagrant.configure(2) do |config|
+    config.vm.box = "centos/7"
+    config.vm.box_check_update = false
+    config.vm.hostname = "vagrant.db3"  
+    config.vm.network "private_network", ip: "100.168.1.102"
+    config.vm.network  "forwarded_port", guest: 22, host: 2224, auto_correct: true
+
+    config.vm.define "database_3"
+    config.ssh.port = 22
+    config.vm.provider "virtualbox" do |v|
+       v.gui = false
+       v.memory = 2048
+       v.cpus = 1
+       v.check_guest_additions = true
+       v.name = "database_3"
+  
+    end
+  end
