@@ -9,15 +9,15 @@ Vagrant.configure(2) do |config|
   config.vm.box_check_update = false
 
    (1..$db_count).each do |i|
-        config.vm.define "database#i" do |dev|
+        config.vm.define "database#{i}" do |dev|
          dev.vm.network  "private_network", ip: "100.168.1.#{10+i}"
-         dev.vm.hostname = "database#i"  
+         dev.vm.hostname = "database#{i}"  
          dev.vm.provider "virtualbox" do |v|
             v.gui = false
             v.memory = 2048
             v.cpus = 1
             v.check_guest_additions = true
-            v.name = "database#i"
+            v.name = "database#{i}"
          end
         end
    end
