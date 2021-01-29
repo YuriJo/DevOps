@@ -5,16 +5,23 @@ $db_count = 3
 
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "centos/7"
+  config.vm.box = "centos7-root"
   config.vm.box_check_update = false
 
-   (1..$db_count).each do |i|
+  config.ssh.username = 'root'
+  config.ssh.password = 'vagrant'
+  config.ssh.insert_key = 'true'
+ 
+  (1..$db_count).each do |i|
+	
         config.vm.define "database#{i}" do |dev|
+
          dev.vm.network  "private_network", ip: "100.168.1.#{10+i}"
+	 dev.vm.network "forwarded_port", guest: 22, host: "#{202+i}"
          dev.vm.hostname = "database#{i}"  
          dev.vm.provider "virtualbox" do |v|
             v.gui = false
-            v.memory = 2048
+            v.memory = 3048
             v.cpus = 1
             v.check_guest_additions = true
             v.name = "database#{i}"
